@@ -37,6 +37,7 @@ int main(void)
     for (int i = 0; i < 3; i++)
     {
         // TODO: tmp[i] = ???
+        tmp[i]=list[i];
     }
 
     // Add a 4th number to the new list
@@ -57,6 +58,7 @@ int main(void)
     for (int i = 0; i < 4; i++)
     {
         // TODO: printf(...)
+        printf("%i\n", list[i]);
     }
 
     // Free the final list

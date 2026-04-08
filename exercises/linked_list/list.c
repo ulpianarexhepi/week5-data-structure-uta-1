@@ -46,7 +46,22 @@ int main(void)
     //            (your choice – but be consistent!)
 
     // --- Your loop goes here ---
+for (int i = 0; i < 5; i++)
+    {
+        string input = get_string("Enter word %i: ", i + 1);
+        node *n = malloc(sizeof(node));
 
+        if (n == NULL)
+        {
+            free_list(head);
+            return 1;
+        }
+
+        strcpy(n->word, input);
+
+        n->next = head;
+        head = n;
+    }
     // Print all words in the list
     printf("\nYour list:\n");
     print_list(head);
@@ -64,7 +79,13 @@ void print_list(node *head)
 {
     // TODO: Use a temporary pointer to traverse the list
     //       Do NOT move the head pointer itself!
-
+node *ptr = head;
+    while (ptr != NULL)
+    {
+        printf("%s -> ", ptr->word);
+        ptr = ptr->next;
+    }
+    printf("NULL\n");
     // Hint: while (tmp != NULL) { ... tmp = tmp->next; }
 }
 
@@ -75,4 +96,12 @@ void free_list(node *head)
 {
     // TODO: Use two pointers – one for the current node,
     //       one to save the next node before freeing current.
+    node *ptr = head;
+    while (ptr != NULL)
+    {
+        // Save next before freeing current
+        node *next = ptr->next;
+        free(ptr);
+        ptr = next;
+    }
 }

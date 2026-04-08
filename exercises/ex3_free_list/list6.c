@@ -66,8 +66,11 @@ int main(void)
     while (ptr != NULL)
     {
         // TODO: Save ptr->next into a variable called next
+        node *next =ptr->next;
         // TODO: free(ptr)
+        free(ptr);
         // TODO: ptr = next
+       ptr = next;
     }
 
     return 0;

@@ -10,6 +10,7 @@
 #include <cs50.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 
 // Number of words in our mini dictionary
 #define DICT_SIZE 10
@@ -38,6 +39,25 @@ int main(void)
     //       bool found = false;   (remember to #include <stdbool.h>)
 
     // --- Your search logic goes here ---
+    bool found=false;
+
+    for (int i = 0; i<DICT_SIZE; i++)
+    {
+
+    if (strcmp(words[i], query) == 0)
+    {
+        found = true;
+        break;
+    }
+}
+if (found)
+{
+    printf("Found!\n");
+}
+else
+{
+    printf("Not found.\n");
+}
 
     return 0;
 }

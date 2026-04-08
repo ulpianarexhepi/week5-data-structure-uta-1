@@ -35,13 +35,15 @@ int hash(string word)
 {
     // TODO: Handle the edge case where the word is empty
     //       (what should you return if strlen(word) == 0?)
-
+if (strlen(word) == 0){
+    return 0;
+}
     // TODO: Get the first character of the word
-
+char first_letter=word[0];
     // TODO: Convert it to lowercase using tolower()
-
+char lower_letter=tolower(first_letter);
     // TODO: Return a number between 0 and 25
     //       Hint: 'a' has ASCII value 97
 
-    return 0; // Replace this line with your implementation
+    return lower_letter - 'a'; // Replace this line with your implementation
 }

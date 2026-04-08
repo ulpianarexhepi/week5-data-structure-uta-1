@@ -27,13 +27,19 @@
 node *prepend(node *list, int number)
 {
     // TODO: Allocate a new node with malloc
+    node *n = malloc(sizeof(node));
     // TODO: Check if malloc returned NULL — if so, return list unchanged
+    if (n == NULL){
+        return list;
+    }
     // TODO: Set n->number = number
+    n->number = number;
     // TODO: Set n->next = NULL
+    n->next = list;
     // TODO: Prepend n to the front of list (two lines from Exercise 2)
     // TODO: Return the new head
 
-    return list; // Replace this line
+    return n; // Replace this line
 }
 
 // -------------------------------------------------------
@@ -54,6 +60,9 @@ void print_list(node *list)
     }
 
     // TODO: Use a for loop (or while loop) to print each number
+    for(node *ptr = list; ptr != NULL; ptr = ptr->next){
+        printf("%i\n", ptr->number);
+    }
     // Hint: for (node *ptr = list; ptr != NULL; ptr = ptr->next)
 }
 
@@ -68,9 +77,17 @@ void print_list(node *list)
 //   free(ptr);
 //   ptr = next;
 node *free_list(node *list)
-{
+{   node *ptr = list;
     // TODO: Walk the list and free each node safely
+    while (ptr != NULL){
+        node *next = ptr->next;
+
+        free(ptr);
+        ptr = next;
+    }
+
     //       (save next BEFORE calling free — you know why!)
+
 
     return NULL; // This line is correct — keep it as the last line
 }

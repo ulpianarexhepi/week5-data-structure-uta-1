@@ -16,6 +16,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+#include <strings.h>
 
 // The hash table – an array of 26 linked list heads, one per letter
 // All entries start as NULL (empty buckets)
@@ -25,6 +26,9 @@ node *table[HASH_SIZE];
 // hash_word
 // -------------------------------------------------------
 // TODO: Implement this function.
+int hash_word(const char *word){
+    return tolower(word[0] - 'a');
+}
 //
 // Given a word, return an index between 0 and HASH_SIZE-1 (0–25).
 // Map the first character of the word to an index:
@@ -44,7 +48,7 @@ int hash_word(const char *word)
 // load
 // -------------------------------------------------------
 // TODO: Implement this function.
-//
+
 // Open the file at `filename`, read each word line by line,
 // and insert it into the correct bucket in `table[]`.
 //
@@ -63,12 +67,32 @@ int hash_word(const char *word)
 bool load(const char *filename)
 {
     // TODO: Implement load
-    //
+
+    FILE *file = fopen(filename, "r");
+    if(file == NULL){
+        return false;
+    }
+    char word[50];
+
+    while (fscanf(file, "%49s", word) != EOF){
+        node *n = malloc(sizeof(node));
+        if (n == NULL){
+            fclose(file);
+            return false;
+        }
+        strcpy(n->word, word);
+
+        int index = hash_word(word);
+
+        n->next = table[index];
+        table[index]=n;
+    }
+    fclose(file);
     // Hint for inserting at the front of a linked list:
     //   new_node->next = table[index];
     //   table[index] = new_node;
 
-    return false; // Replace this line
+    return true; // Replace this line
 }
 
 // -------------------------------------------------------
@@ -86,10 +110,19 @@ bool load(const char *filename)
 bool search(const char *word)
 {
     // TODO: Implement search
-    //
+    int index = hash_word(word);
+node *cursor = table[index];
     // Hint: strcasecmp(a, b) returns 0 if strings match (case-insensitive)
     //       It's in <strings.h> – already included via dictionary.h
 
+    while (cursor != NULL)
+    {
+        if (strcasecmp(cursor->word, word) == 0)
+        {
+            return true;
+        }
+        cursor = cursor->next;
+    }
     return false; // Replace this line
 }
 
@@ -106,6 +139,19 @@ bool search(const char *word)
 void unload(void)
 {
     // TODO: For each bucket i from 0 to HASH_SIZE-1:
+    for (int i = 0; i < HASH_SIZE; i++)
+    {
+        node *cursor = table[i];
+
+        while (cursor != NULL)
+        {
+            node *next = cursor->next;
+            free(cursor);
+            cursor = next;
+        }
+
+        table[i] = NULL;
+    }
     //         node *cursor = table[i];
     //         while (cursor != NULL) { ... }
 }

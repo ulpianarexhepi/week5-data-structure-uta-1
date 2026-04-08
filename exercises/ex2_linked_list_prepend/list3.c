@@ -43,12 +43,17 @@ int main(void)
         //   Line 2: Make list point to n (n is now the new head)
 
         // TODO: Line 1 – n->next = ???
+        n->next = list;
         // TODO: Line 2 – list = ???
+        list=n;
     }
 
     // TODO (bonus): Add a for loop here to print all numbers in the list.
     // Hint: for (node *ptr = list; ptr != NULL; ptr = ptr->next)
     // What order do the numbers print in? Is that what you expected?
+    for(node *ptr =list; ptr != NULL; ptr= ptr->next){
+        printf("%i\n", ptr->number);
+    }
 
     return 0;
 }
